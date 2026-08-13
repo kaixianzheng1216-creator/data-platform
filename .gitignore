@@ -1,0 +1,12 @@
+.env
+.venv/
+.mypy_cache/
+.ruff_cache/
+.idea/*
+.omo/*
+
+frontend/node_modules/
+frontend/.next/
+frontend/next-env.d.ts
+frontend/openapi.json
+frontend/tsconfig.tsbuildinfo

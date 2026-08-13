@@ -1,0 +1,23 @@
+[dependency-groups]
+dev = [
+    "prek>=0.2.24,<1.0.0",
+]
+
+[tool.uv.workspace]
+members = ["backend"]
+
+[tool.typos.files]
+extend-exclude = [
+    "uv.lock",
+]
+
+[tool.typos.default]
+extend-ignore-re = [
+    # @提及中的 GitHub 用户名
+    "@[a-zA-Z0-9](?:-?[a-zA-Z0-9])*",
+    # PR 标题中的软件包名称
+    "Bump certifi ",
+]
+
+[tool.typos.default.extend-identifiers]
+alls = "alls"
