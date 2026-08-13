@@ -8,33 +8,28 @@ from app.db.models import metadata
 
 config = context.config
 
-assert config.config_file_name is not None
-fileConfig(config.config_file_name)
+if config.config_file_name:
+    fileConfig(config.config_file_name)
 
 target_metadata = metadata
+database_url = str(settings.SQLALCHEMY_DATABASE_URI)
 
 
-def get_url():
-    return str(settings.SQLALCHEMY_DATABASE_URI)
-
-
-def run_migrations_offline():
-    url = get_url()
-
+def run_migrations_offline() -> None:
     context.configure(
-        url=url, target_metadata=target_metadata, literal_binds=True, compare_type=True
+        url=database_url,
+        target_metadata=target_metadata,
+        literal_binds=True,
+        compare_type=True,
     )
 
     with context.begin_transaction():
         context.run_migrations()
 
 
-def run_migrations_online():
-    configuration = config.get_section(config.config_ini_section)
-
-    assert configuration is not None
-
-    configuration["sqlalchemy.url"] = get_url()
+def run_migrations_online() -> None:
+    configuration = config.get_section(config.config_ini_section) or {}
+    configuration["sqlalchemy.url"] = database_url
 
     connectable = engine_from_config(
         configuration,
